@@ -14,7 +14,8 @@ def gtml_html ():
             with open(file, 'r',encoding='utf-8') as html_file: 
                 lines = html_file.readlines() 
             print("\033[93m[Tips]\033[0m 文件读取成功！")
-            data_list.append('<!DOCTYPE html>')
+            data_list.append('<!DOCTYPE html>' + '\n')
+            data_list.append('<meta charset="utf-8">' + '\n')
             for line in lines: 
                 if line.startswith("<字>"):
                         data_0 = line.split("<")[1].split(">")[0]
@@ -22,11 +23,66 @@ def gtml_html ():
                         data_list.append('<p>' + data_1 + '</p>' + '\n')
                         print("\033[93m[Tips]\033[0m 已转换1个" + data_0)
 
-
                 elif line.startswith("<题1>"):
                         data_0 = line.split("<")[1].split(">")[0]
                         data_1 = line.split(">")[1].split("</")[0]
                         data_list.append('<h1>' + data_1 + '</h1>' + '\n')
+                        print("\033[93m[Tips]\033[0m 已转换1个" + data_0)
+                
+                elif line.startswith("<题2>"):
+                        data_0 = line.split("<")[1].split(">")[0]
+                        data_1 = line.split(">")[1].split("</")[0]
+                        data_list.append('<h2>' + data_1 + '</h2>' + '\n')
+                        print("\033[93m[Tips]\033[0m 已转换1个" + data_0)
+                
+                elif line.startswith("<题3>"):
+                        data_0 = line.split("<")[1].split(">")[0]
+                        data_1 = line.split(">")[1].split("</")[0]
+                        data_list.append('<h3>' + data_1 + '</h3>' + '\n')
+                        print("\033[93m[Tips]\033[0m 已转换1个" + data_0)
+
+                elif line.startswith("<题4>"):
+                        data_0 = line.split("<")[1].split(">")[0]
+                        data_1 = line.split(">")[1].split("</")[0]
+                        data_list.append('<h4>' + data_1 + '</h4>' + '\n')
+                        print("\033[93m[Tips]\033[0m 已转换1个" + data_0)
+                
+                elif line.startswith("<题5>"):
+                        data_0 = line.split("<")[1].split(">")[0]
+                        data_1 = line.split(">")[1].split("</")[0]
+                        data_list.append('<h5>' + data_1 + '</h5>' + '\n')
+                        print("\033[93m[Tips]\033[0m 已转换1个" + data_0)
+                
+                elif line.startswith("<题6>"):
+                        data_0 = line.split("<")[1].split(">")[0]
+                        data_1 = line.split(">")[1].split("</")[0]
+                        data_list.append('<h6>' + data_1 + '</h6>' + '\n')
+                        print("\033[93m[Tips]\033[0m 已转换1个" + data_0)
+
+                elif line.startswith("<gtml>"):
+                        data_0 = line.split("<")[1].split(">")[0]
+                        data_list.append('<html>' + '\n')
+                        print("\033[93m[Tips]\033[0m 已转换1个" + data_0)
+
+                elif line.startswith("</gtml>"):
+                        data_0 = line.split("<")[1].split(">")[0]
+                        data_list.append('</html>' + '\n')
+                        print("\033[93m[Tips]\033[0m 已转换1个" + data_0)
+                
+                elif line.startswith("<主体>"):
+                        data_0 = line.split("<")[1].split(">")[0]
+                        data_list.append('<body>' + '\n')
+                        print("\033[93m[Tips]\033[0m 已转换1个" + data_0)
+
+                elif line.startswith("</主体>"):
+                        data_0 = line.split("<")[1].split(">")[0]
+                        data_list.append('</body>' + '\n')
+                        print("\033[93m[Tips]\033[0m 已转换1个" + data_0)
+
+                elif line.startswith("<网页标题>"):
+                        data_0 = line.split("<")[1].split(">")[0]
+                        data_1 = line.split(">")[1].split("</")[0]
+                        data_list.append('<title>' + data_1 + '</title>' + '\n')
                         print("\033[93m[Tips]\033[0m 已转换1个" + data_0)
 
                 elif line == ("\n"):
@@ -34,7 +90,7 @@ def gtml_html ():
                         print("\033[93m[Tips]\033[0m 空行" )
 
                 else :
-                    data_list.append(line)
+                    data_list.append(line + '\n')
                     print("\033[93m[Tips]\033[0m 直接写入：" + line +
                     "\033[93m[↑]\033[0m 如果这段代码不是HTML代码或注释，请检查被转换文件的GTML0.0.3beta语法是否规范" )
                 
