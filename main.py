@@ -1,5 +1,4 @@
 import os
-import time
 os.system('cls')
 data_list = []
 # 定义一些函数
@@ -17,24 +16,27 @@ def gtml_html ():
             print("\033[93m[Tips]\033[0m 文件读取成功！")
             data_list.append('<!DOCTYPE html>')
             for line in lines: 
-                if line.startswith("字"):
-                        data = line.split(" ")
-                        data_list.append('<p>' + data[1] + '</p>' + '\n')
-                        print("\033[93m[Tips]\033[0m 已转换1个" + data[0])
+                if line.startswith("<字>"):
+                        data_0 = line.split("<")[1].split(">")[0]
+                        data_1 = line.split(">")[1].split("</")[0]
+                        data_list.append('<p>' + data_1 + '</p>' + '\n')
+                        print("\033[93m[Tips]\033[0m 已转换1个" + data_0)
 
 
-                elif line.startswith("题1"):
-                        data = line.split(" ")
-                        data_list.append('<h1>' + data[1] + '</h1>' + '\n')
-                        print("\033[93m[Tips]\033[0m 已转换1个" + data[0])
+                elif line.startswith("<题1>"):
+                        data_0 = line.split("<")[1].split(">")[0]
+                        data_1 = line.split(">")[1].split("</")[0]
+                        data_list.append('<h1>' + data_1 + '</h1>' + '\n')
+                        print("\033[93m[Tips]\033[0m 已转换1个" + data_0)
 
-                elif line == (""):
+                elif line == ("\n"):
                         data_list.append('\n')
                         print("\033[93m[Tips]\033[0m 空行" )
 
                 else :
                     data_list.append(line)
-                    print("\033[93m[Tips]\033[0m 直接写入：" + line + "\n" )
+                    print("\033[93m[Tips]\033[0m 直接写入：" + line +
+                    "\033[93m[↑]\033[0m 如果这段代码不是HTML代码或注释，请检查被转换文件的GTML0.0.3beta语法是否规范" )
                 
                 
             print("\033[93m[Tips]\033[0m 开始写入文件...")
@@ -43,20 +45,20 @@ def gtml_html ():
 
 
             print("\033[93m[Tips]\033[0m 恭喜你！转换成功！在程序根目录下找到生成.html文件即可！（太乱的话可以使用格式化代码解决！）")
-            print("\033[93m[Tips]\033[0m 每次转换成功都请记得删除或从程序根目录中移出生成.html文件，否则下次生成会出现冲突！")
-            if str(input("键入空格以继续")) == " ":
+            print("\033[93m[Tips]\033[0m 每次转换成功都请记得删除或从程序根目录中移出生成.html文件，否则下次生成会覆盖此文件！")
+            if str(input("任意键以继续")):
                 os.system('cls')
                 return
         
         except FileNotFoundError: 
             print('\033[91m[warning]\033[0m文件不存在！') 
-            if str(input("键入空格以继续")) == " ":
+            if str(input("任意键以继续")):
                 os.system('cls')
                 return
 
         except PermissionError: 
             print('\033[91[mwarning]\033[0m无权限访问文件！') 
-            if str(input("键入空格以继续")) == " ":
+            if str(input("任意键以继续")):
                 os.system('cls')
                 return
 
@@ -67,13 +69,13 @@ def gtml_html ():
 
     else:
         print("\033[91m[warning]\033[0m 你输入的后缀是错误的！")
-        if str(input("键入空格以继续")) == " ":
+        if str(input("任意键以继续")):
             os.system('cls')
             return
 
 # 更新检测
 os.system('cls')
-print("\033[93m[Tips]\033[0m 当前版本号 0.0.2-beta")
+print("\033[93m[Tips]\033[0m 当前版本号 0.0.3-beta")
 print("\033[93m[Tips]\033[0m 该版本没有更新检测:( 如需查找更新请前往项目地址 \033[94mhttps://github.com/Explore114/GavaTML/releases\033[0m ！靴靴")
 
 # 主页面
@@ -92,8 +94,7 @@ while True:
     print("主菜单")
     print("1.gtml转html")
     print("2.还没做好！提交PR可以加快开发进度哟~")
-    Options = int(input())
-    if Options == 1:
+    if input() == "1":
         gtml_html ()
     else:
         print("请输入正确的选项")
