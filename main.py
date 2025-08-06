@@ -15,24 +15,27 @@ def gtml_html ():
             with open(file, 'r',encoding='utf-8') as html_file: 
                 lines = html_file.readlines() 
             print("\033[93m[Tips]\033[0m 文件读取成功！")
+            data_list.append('<!DOCTYPE html>')
             for line in lines: 
                 if line.startswith("字"):
                         data = line.split(" ")
-                        data_list.append('<p>' + data[1] + '</p>')
+                        data_list.append('<p>' + data[1] + '</p>' + '\n')
                         print("\033[93m[Tips]\033[0m 已转换1个" + data[0])
+
 
                 elif line.startswith("题1"):
                         data = line.split(" ")
-                        data_list.append('<h1>' + data[1] + '</h1>')
+                        data_list.append('<h1>' + data[1] + '</h1>' + '\n')
                         print("\033[93m[Tips]\033[0m 已转换1个" + data[0])
 
-                elif line.startswith(""):
-                        data_list.append('')
-                        print("\033[93m[Tips]\033[0m 空行已被忽略" )
+                elif line == (""):
+                        data_list.append('\n')
+                        print("\033[93m[Tips]\033[0m 空行" )
 
                 else :
                     data_list.append(line)
-                    print("\033[93m[Tips]\033[0m 直接写入：" + line )
+                    print("\033[93m[Tips]\033[0m 直接写入：" + line + "\n" )
+                
                 
             print("\033[93m[Tips]\033[0m 开始写入文件...")
             with open('生成.html', 'w',encoding='utf-8') as file: 
@@ -70,7 +73,7 @@ def gtml_html ():
 
 # 更新检测
 os.system('cls')
-print("\033[93m[Tips]\033[0m 当前版本号 0.0.1-beta")
+print("\033[93m[Tips]\033[0m 当前版本号 0.0.2-beta")
 print("\033[93m[Tips]\033[0m 该版本没有更新检测:( 如需查找更新请前往项目地址 \033[94mhttps://github.com/Explore114/GavaTML/releases\033[0m ！靴靴")
 
 # 主页面
@@ -92,6 +95,5 @@ while True:
     Options = int(input())
     if Options == 1:
         gtml_html ()
-
     else:
         print("请输入正确的选项")
