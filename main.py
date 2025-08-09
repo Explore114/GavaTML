@@ -1,6 +1,8 @@
 import os
 import re
 from loguru import logger
+import requests
+update = str('v0.0.1')
 os.system('cls')
 data_list = []
 # 定义转换字典
@@ -43,6 +45,32 @@ gtml_html_dict_key = list(gtml_html_dict.keys())
 
 
 # 定义一些函数
+
+# 检测更新
+def Update ():
+    os.system('cls')
+    logger.info("正在检查更新...")
+    logger.info("当前版本号" + update)
+    try:
+        update = requests.get('https://api.github.com/repos/Explore114/GavaTML/releases/latest')
+        if update.status_code == 200:
+            version_data = update.json()  # 自动解析JSON，返回字典/列表
+            if update == version_data['tag_name']:
+                logger.success("当前版本为最新版本！")
+            else:
+                logger.info("当前版本不是最新版本！")
+                print("标签（版本号）：")
+        else:
+            logger.warning("状态码异常:" + str(update.status_code))
+            logger.info("诶呀🤯请求似乎失败了呢（搓手手）建议您自行到项目仓库查看新版本")
+            return
+        
+    except requests.exceptions.RequestException as e:
+        logger.error(f"请求失败: {e}")
+        if str(input("任意键以继续")):
+                os.system('cls')
+                return
+
 # # 这里定义的是gtml转到html的函数
 def gtml_html ():
     os.system('cls')
@@ -115,14 +143,14 @@ def gtml_html ():
 
 # 更新检测
 os.system('cls')
-logger.info("当前版本号 0.0.3-beta")
-logger.info("该版本没有更新检测:( 如需查找更新请前往项目地址 https://github.com/Explore114/GavaTML/releases ！靴靴")
+Update ()
 
 
 # 主页面
 
 
 while True:
+    logger.warning("你必须在遵守GPL v3的开源协议前提下使用本软件！")
     print(""" \
   _______      ___   ____    ____  ___   .___________.___  ___.  __      
  /  _____|    /   \  \   \  /   / /   \  |           |   \/   | |  |     
