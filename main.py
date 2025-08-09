@@ -2,6 +2,7 @@ import os
 import re
 from loguru import logger
 import requests
+import webbrowser
 update = str('v0.0.1')
 os.system('cls')
 data_list = []
@@ -52,16 +53,34 @@ def Update ():
     logger.info("正在检查更新...")
     logger.info("当前版本号" + update)
     try:
-        update = requests.get('https://api.github.com/repos/Explore114/GavaTML/releases/latest')
-        if update.status_code == 200:
-            version_data = update.json()  # 自动解析JSON，返回字典/列表
+        update_data = requests.get('https://api.github.com/repos/Explore114/GavaTML/releases/latest')
+        if update_data.status_code == 200:
+            version_data = update_data.json()  # 自动解析JSON，返回字典/列表
             if update == version_data['tag_name']:
                 logger.success("当前版本为最新版本！")
             else:
                 logger.info("当前版本不是最新版本！")
-                print("标签（版本号）：")
+                print("|标题：" + version_data['name'])
+                print("|标签（版本号）：" + version_data['tag_name'])
+                print("|更新内容：" + version_data['body'])
+                logger.warning("更新可能会导致语法更改导致新版转换器无法转换旧版语法，请仔细阅读更新日志查看语法更改！。但我们仍建议您视情况尽量将转换器更新到最新版本以便获取新的修复更新")
+                print("以下是文件列表")
+                file_data = [asset['name'] for asset in version_data.get('assets', [])]
+                for fileNumber,Number in enumerate(file_data):
+                    print(str(fileNumber) + "." + Number)
+                Options = input("请输入文件序号（不想更新请回复N）:")
+                file_data = [asset['browser_download_url'] for asset in version_data.get('assets', [])]
+                if Options == "N":
+                    return
+                elif 0 <= int(Options) < len(file_data):
+                    webbrowser.open(file_data[int(Options)])
+                    logger.success("已在浏览器中下载！")
+                    
+
+
+
         else:
-            logger.warning("状态码异常:" + str(update.status_code))
+            logger.warning("状态码异常:" + str(update_data.status_code))
             logger.info("诶呀🤯请求似乎失败了呢（搓手手）建议您自行到项目仓库查看新版本")
             return
         
